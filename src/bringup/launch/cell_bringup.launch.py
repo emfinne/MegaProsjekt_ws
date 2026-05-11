@@ -13,7 +13,7 @@ def generate_launch_description():
             PathJoinSubstitution([FindPackageShare("control"), "launch", "start_robots.launch.py"])
         ),
         launch_arguments={
-            "Eevee_use_mock_hardware": "true",
+            "use_mock_hardware": "true",
             "headless_mode":"true",
             "launch_rviz": "false",
         }.items(),
