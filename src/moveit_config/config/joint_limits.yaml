@@ -1,0 +1,23 @@
+default_velocity_scaling_factor: 0.1
+default_acceleration_scaling_factor: 0.1
+
+
+joint_limits:
+  ur3_elbow_joint:
+    has_acceleration_limits: true
+    max_acceleration: 5.0
+  ur3_shoulder_lift_joint:
+    has_acceleration_limits: true
+    max_acceleration: 5.0
+  ur3_shoulder_pan_joint:
+    has_acceleration_limits: true
+    max_acceleration: 5.0
+  ur3_wrist_1_joint:
+    has_acceleration_limits: true
+    max_acceleration: 5.0
+  ur3_wrist_2_joint:
+    has_acceleration_limits: true
+    max_acceleration: 5.0
+  ur3_wrist_3_joint:
+    has_acceleration_limits: true
+    max_acceleration: 5.0
