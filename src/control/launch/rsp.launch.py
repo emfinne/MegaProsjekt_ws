@@ -88,7 +88,7 @@ def generate_launch_description():
                 [
                     FindPackageShare("control"),
                     "config",
-                    "calibration.yaml",
+                    "robot_calibration.yaml",
                 ]
             ),
             description="The calibration configuration of the actual robot used.",
