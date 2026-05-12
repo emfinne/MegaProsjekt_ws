@@ -1,0 +1,74 @@
+# usb_cam-parametere for Logitech HD Pro Webcam C920
+#
+# Verifisert mot maskinvaren 2026-05-12 med v4l2-ctl:
+#   USB-ID 046d:082d, serienummer 942F52FF
+#   MJPG-format kreves for 30 fps over 720p (YUYV gir maks 5 fps paa 1080p,
+#   10 fps paa 720p paa grunn av USB 2.0-baandbredde).
+#
+# Stabil device-sti: /dev/v4l/by-id/usb-046d_HD_Pro_Webcam_C920_<serienr>-video-index0.
+# /dev/videoN endrer seg ved re-enumerering (sett naar kameraet ble lukket og
+# aapnet igjen — gikk fra /dev/video2 til /dev/video4), saa by-id-symlink er
+# paakrevd for at launch-fila skal vaere reproduserbar.
+#
+# Kilder:
+#   - usb_cam ROS2 driver: https://github.com/ros-drivers/usb_cam
+#   - usb_cam-eksempel: /opt/ros/jazzy/share/usb_cam/config/params_1.yaml
+#   - Lab4 camera_pipeline (AIS2105) — node-/launch-moenster
+#   - v4l2-ctl --list-formats-ext for stoettede formater
+usb_cam:
+  ros__parameters:
+    # video_device: stabil by-id-symlink. Generert fra v4l2-ctl-utskrift
+    # + serienummer hentet fra ls /dev/v4l/by-id/ paa Kristians maskin.
+    video_device: "/dev/v4l/by-id/usb-046d_HD_Pro_Webcam_C920_942F52FF-video-index0"
+
+    framerate: 30.0
+    io_method: "mmap"
+    frame_id: "camera_link"
+
+    # pixel_format + av_device_format: direkte kopi fra usb_cam-eksempel
+    # /opt/ros/jazzy/share/usb_cam/config/params_1.yaml.
+    # Begge ma vere satt; uten av_device_format krasjer usb_cam_node med
+    # "Invalid v4l2 format" (verifisert under oppsettet 2026-05-12).
+    pixel_format: "mjpeg2rgb"
+    av_device_format: "YUV422P"
+
+    # image_width/height/camera_name: generert. 720p er nok for kubedeteksjon
+    # og halverer CPU mot 1080p. camera_name brukes som filnavn for
+    # kalibreringsfila som blir generert i Task #6.
+    image_width: 1280
+    image_height: 720
+    camera_name: "logitech_c920"
+
+    # camera_info_url settes etter intrinsisk kalibrering (Task #6).
+    camera_info_url: ""
+
+    # --- Kamera-kontroller ---
+    #
+    # -1-moenster og parameternavn: fra usb_cam-eksempel params_1.yaml
+    # (i samme katalog som over). -1 ber usb_cam la kontrollen vaere i
+    # fred (dvs. behold default fra v4l2 / forrige v4l2-ctl-kommando).
+    #
+    # MERKNAD (oppdaget under testing 2026-05-12 paa Ubuntu 24.04):
+    # usb_cam 0.8.1 bruker eldre v4l2-kontrollnavn (focus_auto,
+    # exposure_auto, white_balance_temperature_auto) som ikke finnes
+    # paa Noble-kernelen. De faktiske navnene er
+    # focus_automatic_continuous, auto_exposure, white_balance_automatic.
+    # Disse parameterne logger "unknown control" og blir ignorert,
+    # men det krasjer ikke noden. Hvis vi vil styre dem under test
+    # bruker man v4l2-ctl direkte:
+    #
+    #   v4l2-ctl -d /dev/video2 --set-ctrl=focus_automatic_continuous=0
+    #   v4l2-ctl -d /dev/video2 --set-ctrl=focus_absolute=0
+    #   v4l2-ctl -d /dev/video2 --set-ctrl=auto_exposure=1
+    #   v4l2-ctl -d /dev/video2 --set-ctrl=white_balance_automatic=0
+    autofocus: false
+    focus: -1
+    autoexposure: true
+    exposure: -1
+    auto_white_balance: true
+    white_balance: -1
+    brightness: -1
+    contrast: -1
+    saturation: -1
+    sharpness: -1
+    gain: -1

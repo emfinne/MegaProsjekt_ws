@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<!--
+  Opphav: ament_python-mal med samme struktur som Lab4 camera_pipeline
+  (AIS2105). Avhengighetslista er utvidet for usb_cam og vision_msgs.
+-->
+<package format="3">
+  <name>vision</name>
+  <version>0.0.1</version>
+  <description>
+    Maskinsyn-modul for UR-prosjektet i AIS2105.
+    Bringer opp Logitech C920 via usb_cam, og vil etterhvert inneholde HSV-deteksjon
+    av fargede kuber samt logging av deteksjoner til rapport-bruk.
+  </description>
+  <maintainer email="kristian.lokkeberg@gmail.com">Kristian Loekkeberg</maintainer>
+  <license>MIT</license>
+
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>vision_msgs</exec_depend>
+  <exec_depend>cv_bridge</exec_depend>
+  <exec_depend>usb_cam</exec_depend>
+  <exec_depend>rqt_image_view</exec_depend>
+  <exec_depend>python3-opencv</exec_depend>
+
+  <test_depend>ament_copyright</test_depend>
+  <test_depend>ament_flake8</test_depend>
+  <test_depend>ament_pep257</test_depend>
+  <test_depend>python3-pytest</test_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>
