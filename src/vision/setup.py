@@ -31,10 +31,9 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            # Noder legges til etterhvert som de skrives:
-            # 'hsv_tuner = vision.hsv_tuner:main',
-            # 'hsv_detector = vision.hsv_detector:main',
-            # 'detection_logger = vision.detection_logger:main',
+            'hsv_tuner = vision.hsv_tuner:main',
+            'hsv_detector = vision.hsv_detector:main',
+            # 'detection_logger = vision.detection_logger:main',  # neste
         ],
     },
 )
