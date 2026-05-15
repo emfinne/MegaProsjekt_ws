@@ -11,6 +11,8 @@
         <joint name="ur3_wrist_2_joint" value="1.6315"/>
         <joint name="ur3_wrist_3_joint" value="0"/>
     </group_state>
+    <disable_collisions link1="base_plate" link2="Eevee_base_plate" reason="Adjacent"/>
+    <disable_collisions link1="Eevee_base_plate" link2="ur3_base_link_inertia" reason="Adjacent"/>
     <disable_collisions link1="ur3_base_link_inertia" link2="ur3_shoulder_link" reason="Adjacent"/>
     <disable_collisions link1="ur3_base_link_inertia" link2="ur3_upper_arm_link" reason="Never"/>
     <disable_collisions link1="ur3_base_link_inertia" link2="ur3_wrist_1_link" reason="Never"/>
@@ -23,4 +25,24 @@
     <disable_collisions link1="ur3_wrist_1_link" link2="ur3_wrist_2_link" reason="Adjacent"/>
     <disable_collisions link1="ur3_wrist_1_link" link2="ur3_wrist_3_link" reason="Never"/>
     <disable_collisions link1="ur3_wrist_2_link" link2="ur3_wrist_3_link" reason="Adjacent"/>
+
+
+
+    <group name="gripper">
+        <joint name="ur3_left_slide"/>
+        <joint name="ur3_right_slide"/>
+    </group>
+
+    <end_effector
+            name="gripper_eef"
+            parent_link="ur3_tool0"
+            group="gripper"/>
+
+
+    <disable_collisions link1="ur3_adapter" link2="ur3_gripper_base" reason="Adjacent"/>
+    <disable_collisions link1="ur3_gripper_base" link2="ur3_left_finger" reason="Adjacent"/>
+    <disable_collisions link1="ur3_gripper_base" link2="ur3_right_finger" reason="Adjacent"/>
+
+
+
 </robot>

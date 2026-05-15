@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
     <xacro:include filename="$(find ur_description)/urdf/ur_macro.xacro"/>
+    <xacro:include filename="$(find description)/urdf/gripper_macro.xacro"/>
 
     <xacro:macro name="robot_cell" params="
     parent
@@ -11,16 +12,85 @@
     physical_parameters_file
     visual_parameters_file
     ">
+
+        <joint name="base_plate" type="fixed">
+            <xacro:insert_block name="origin"/>
+            <parent link="${parent}"/>
+            <child link="base_plate"/>
+        </joint>
+
+
+        <link name="base_plate">
+            <visual>
+                <geometry>
+                    <mesh filename="package://description/meshes/table/BasePlate.stl" scale="0.001 0.001 0.001"/>
+                </geometry>
+                <origin xyz="0 0 0" rpy="${pi/2} 0 ${pi/2}" />
+                <material name="aluminum">
+                    <color rgba="0.77 0.78 0.80 1.0"/>
+                </material>
+            </visual>
+            <collision>
+                <geometry>
+                    <mesh filename="package://description/meshes/table/BasePlate.stl" scale="0.001 0.001 0.001"/>
+                </geometry>
+                <origin xyz="0 0 0" rpy="${pi/2} 0 ${pi/2}" />
+            </collision>
+        </link>
+
+
+        <link name="Eevee_base_plate">
+            <visual>
+                <geometry>
+                    <mesh filename="package://description/meshes/table/EeveeMountingPlate.stl" scale="0.001 0.001 0.001"/>
+                </geometry>
+                <origin xyz="0 0 0" rpy="0 0 ${pi/2}" />
+                <material name="aluminum">
+                    <color rgba="0.77 0.78 0.80 1.0"/>
+                </material>
+            </visual>
+
+            <collision>
+                <geometry>
+                    <mesh filename="package://description/meshes/table/EeveeMountingPlate.stl" scale="0.001 0.001 0.001"/>
+                </geometry>
+                <origin xyz="0 0 0" rpy="0 0 ${pi/2}" />
+            </collision>
+        </link>
+
+        <joint name="base_plate_to_Eevee_base_plate" type="fixed">
+            <parent link="base_plate"/>
+            <child link="Eevee_base_plate"/>
+            <origin xyz="0 0.5 0" rpy="0 0 0" />
+        </joint>
+
+
+
+
+
         <xacro:ur_robot
             name="${ur_type}"
             tf_prefix="${ur_type}_"
-            parent="${parent}"
+            parent="Eevee_base_plate"
             joint_limits_parameters_file="${joint_limits_parameters_file}"
             kinematics_parameters_file="${kinematics_parameters_file}"
             physical_parameters_file="${physical_parameters_file}"
             visual_parameters_file="${visual_parameters_file}">
-            <xacro:insert_block name="origin"/>
+            <origin xyz="0 0 0.01" rpy="0 0 0"/>
         </xacro:ur_robot>
+
+        <xacro:gripper
+                parent="${ur_type}_tool0"
+                prefix="${ur_type}_">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:gripper>
+
+
+
     </xacro:macro>
+
+
+
+
 
 </robot>

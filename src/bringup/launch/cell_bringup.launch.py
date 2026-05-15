@@ -17,7 +17,7 @@ def generate_launch_description():
 
 
     apple_rendering_arg = DeclareLaunchArgument(
-        "Apple_rendering",
+        "apple_rendering",
         default_value="false",
         description="Enable apple silicon rendering for RViz"
     )

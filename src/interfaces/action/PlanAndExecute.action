@@ -1,0 +1,24 @@
+# Goal
+uint8 GOAL_TYPE_JOINT = 0
+uint8 GOAL_TYPE_POSE  = 1
+uint8 goal_type
+
+# Used when goal_type == GOAL_TYPE_JOINT
+float64[] joint_values
+
+# Used when goal_type == GOAL_TYPE_POSE
+geometry_msgs/PoseStamped target_pose
+string ee_link
+
+# Common
+bool plan_only            # if true, plan but don't execute
+---
+# Result
+bool success
+string chosen_planner     # which planner won the parallel race
+float64 path_length
+moveit_msgs/RobotTrajectory trajectory
+string message            # human-readable status / error
+---
+# Feedback
+string state              # "PLANNING" | "EXECUTING" | "DONE"
